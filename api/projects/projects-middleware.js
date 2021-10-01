@@ -27,7 +27,22 @@ function validateProject(req, res, next) {
   }
 }
 
+function validateProjectChanges(req, res, next) {
+  try {
+    console.log(req.body.completed);
+    const { name, description, completed } = req.body;
+    if (!name || !description || completed === undefined) {
+      next({ status: 400, message: "missing required field" });
+    } else {
+      next();
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   validateProjectId,
-  validateProject
+  validateProject,
+  validateProjectChanges
 };
